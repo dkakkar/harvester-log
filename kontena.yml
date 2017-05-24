@@ -1,0 +1,21 @@
+---
+version: '2'
+name: harvester
+services:
+  logging:
+    image: devikakakkar29/harvester-cga-logging
+    affinity:
+      - node==enrich1.novalocal
+    external_links:
+      - kafka-kafka
+    environment:
+      TWEET_TOPIC: TweetsRealTime
+      KAFKA_HOST_PORT: kafka-kafka-1:9092,kafka-kafka-2:9092,kafka-kafka-3:9092 
+      SENDER_EMAIL: bop.cga.harvard@gmail.com
+      RECEIVER_EMAIL: devikakakkar29@gmail.com
+      OFFSET_RESET: earliest
+    secrets:
+      - secret: HARVESTER_SENDER_EMAIL_PASSWORD
+        name: SENDER_PASSWORD
+        type: env
+      
